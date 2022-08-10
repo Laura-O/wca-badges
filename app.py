@@ -107,11 +107,14 @@ with st.form("template_form"):
                         "filetype": wcif.type, "filesize": wcif.size}
         st.write(file_details)
 
+        with open(os.path.join("tmp/wcif.json"), "wb") as f:
+            f.write((wcif).getbuffer())
+
     submit = st.form_submit_button()
 
 
 if submit:
-    with open('wcif.json') as f:
+    with open('tmp/wcif.json') as f:
         data = json.load(f)
 
     persons = data['persons']
@@ -125,7 +128,7 @@ if submit:
         open(logo_path, 'rb').read()).decode('utf-8')
 
     for p in persons:
-        if (p['registration']['status'] == 'accepted') and p['registrantId'] < 10:
+        if (p['registration']['status'] == 'accepted'):
             person_schedule = create_personal_schedule(
                 p['assignments'], events)
 
