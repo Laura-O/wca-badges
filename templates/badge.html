@@ -1,8 +1,10 @@
 <div class="wrapper">
     <div class="nametag">
-        <img src="static/images/{{ logo }}" width="120" />
+        <img src="data:image/png;base64,{{logo}}" width="120" />
         <div class="name">{{ name }}</div>
-        <div><p>Competitor-Id:</p>{{ competitor_id }}</div>
+        <div>
+            <p>Competitor-Id:</p>{{ competitor_id }}
+        </div>
         <div>{{ wca_id }}</div>
         <div>{{ country }}</div>
     </div>
@@ -14,12 +16,12 @@
             </tr>
 
             {% for time, info in events.items() %}
-                <tr>
-                    <td>{{ info.time }}</td>
-                    <td>{{ info.event }}</td>
-                    <td>{{ info.role }}</td>
-                </tr>
-                {% endfor %}            
+            <tr>
+                <td>{{ info.time }}</td>
+                <td>{{ info.event }}</td>
+                <td>{{ info.role }}</td>
+            </tr>
+            {% endfor %}
             {% endfor %}
         </table>
         <div class="legend">C: Competitor, J: Judge, R: Runner, S: Scrambler</div>
