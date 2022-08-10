@@ -1,11 +1,27 @@
-<div>
-    <div>
-        <div>{{ name }}</div>
-        <div>{{ competitor_id }}</div>
+<div class="wrapper">
+    <div class="nametag">
+        <img src="static/images/{{ logo }}" width="120" />
+        <div class="name">{{ name }}</div>
+        <div><p>Competitor-Id:</p>{{ competitor_id }}</div>
         <div>{{ wca_id }}</div>
         <div>{{ country }}</div>
     </div>
-    <div>
-        {{ schedule }}
+    <div class="schedule">
+        <table>
+            {% for day, events in schedule.items() %}
+            <tr>
+                <th>{{ day }}</th>
+            </tr>
+
+            {% for time, info in events.items() %}
+                <tr>
+                    <td>{{ info.time }}</td>
+                    <td>{{ info.event }}</td>
+                    <td>{{ info.role }}</td>
+                </tr>
+                {% endfor %}            
+            {% endfor %}
+        </table>
+        <div class="legend">C: Competitor, J: Judge, R: Runner, S: Scrambler</div>
     </div>
 </div>

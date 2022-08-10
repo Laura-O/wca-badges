@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@theo4u/wkhtmltopdf": "^1.1.0"
+  }
+}
