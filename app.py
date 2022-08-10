@@ -56,7 +56,8 @@ def generate_events_dict(schedule):
 
 
 def create_personal_schedule(assignments, events):
-    roles = {'competitor': 'C', 'runner': 'R', 'scrambler': 'S'}
+    roles = {'competitor': 'C', 'staff-runner': 'R',
+             'staff-scrambler': 'S', 'staff-judge': 'J'}
 
     person_schedule = {}
     for a in assignments:
