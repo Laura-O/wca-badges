@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+  <style type="text/css">
+    * {
+      box-sizing: border-box;
+      -moz-box-sizing: border-box;
+    }
+
+    body {
+      font-size: 12pt;
+      font-family: 'Heebo', sans-serif;
+      line-height: 1.5;
+      background: #fff !important;
+      color: #000;
+    }
+
+    table {
+      table-layout: fixed;
+      width: 100%;
+      border-collapse: collapse;
+      border: 3px solid darkgrey;
+    }
+
+    th {
+      border: 1px dotted darkgrey;
+      text-align: left;
+    }
+
+    tr {
+      display: -webkit-box;
+      display: flex;
+      -webkit-box-pack: center;
+      justify-content: center;      
+      text-align: left;
+    }
+
+    td {
+      flex: 1;
+      border: 1px dotted darkgrey;
+    }
+
+    .empty {
+      width: 10px;
+      overflow: hidden;
+    }
+
+  </style>
+</head>
+
+
+<body>
+  <div class="container">
+    <table>
+      <thead>
+        <td class="col empty">Check</td>
+        <td>Name</td>
+        <td>Birthdate</td>
+        <td>Newcomer</td>
+        <td>Comment</td>
+        <td class="col empty">Guest Fr</td>
+        <td class="col empty">Guest Sa</td>
+        <td class="col empty">Guest So</td>
+      </thead>
+      <tbody>
+        {% for person in persons %}
+          {% if person.registration.status == 'accepted' %}          
+            <tr class="row">
+              <td class="col empty"></td>
+              <td class="col">{{ person.name }}</td>
+              <td class="col">{{ person.birthdate }}</td> 
+              <td class="col">{% if person.wcaId == None %} Newcomer {% else %} {% endif %}</td>
+              <td class="col empty"></td>
+              <td class="col empty"></td>
+              <td class="col empty"></td>
+              <td class="col empty"></td>
+            </tr> 
+          {% endif %}
+        {% endfor %}
+      </tbody>
+          </table>
+  </div>
+</body>
+
+</html>
