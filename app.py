@@ -17,10 +17,7 @@ badge_template = env.get_template("./templates/badge.html")
 registration_list_template = env.get_template("./templates/registration_list.html")
 
 front_logo_path = "static/images/wca.png"
-back_logo_path = ""
-
 encoded_front_logo = ""
-encoded_back_logo = ""
 
 
 options = {
@@ -104,7 +101,7 @@ def create_personal_schedule(assignments, events):
     return sorted_schedule, set(assigned_roles)
 
 
-def generate_badges(persons, encoded_front_logo, encoded_back_logo):
+def generate_badges(persons, encoded_front_logo):
     badges = ""
 
     for p in persons:
@@ -121,7 +118,6 @@ def generate_badges(persons, encoded_front_logo, encoded_back_logo):
                 schedule=person_schedule,
                 roles=personal_roles,
                 logo=encoded_front_logo,
-                back_logo=encoded_back_logo,
             )
 
             badges += person_badge
@@ -145,12 +141,9 @@ def generate_registration_list(persons):
     return registration_list
 
 
-left_upload, middle_upload, right_upload = st.columns(3)
+left_upload, right_upload = st.columns(2)
 front_logo = left_upload.file_uploader(
     "Upload front front_logo", type=["png", "jpg", "jpeg", "svg"]
-)
-back_logo = middle_upload.file_uploader(
-    "Upload back logo", type=["png", "jpg", "jpeg", "svg"]
 )
 wcif = right_upload.file_uploader("Upload JSON", type=["json"])
 
@@ -169,26 +162,11 @@ if front_logo is not None:
     with open(os.path.join(front_logo_path), "wb") as f:
         f.write((front_logo).getbuffer())
 
+    image = Image.open(front_logo_path)
+    image.thumbnail([150, 150])
+    image.save(front_logo_path)
+
     encoded_front_logo = base64.b64encode(open(front_logo_path, "rb").read()).decode(
-        "utf-8"
-    )
-
-if back_logo is not None:
-    file_details = {
-        "filename": back_logo.name,
-        "filetype": back_logo.type,
-        "filesize": back_logo.size,
-    }
-
-    middle_upload.write(file_details)
-    middle_upload.image(load_image(back_logo), width=150)
-
-    back_logo_path = "/tmp/" + back_logo.name
-
-    with open(os.path.join(back_logo_path), "wb") as f:
-        f.write((back_logo).getbuffer())
-
-    encoded_back_logo = base64.b64encode(open(back_logo_path, "rb").read()).decode(
         "utf-8"
     )
 
@@ -215,7 +193,7 @@ if submit:
 
     if checkbox_badges:
         with st.spinner("Generating badges..."):
-            badges = generate_badges(persons, encoded_front_logo, encoded_back_logo)
+            badges = generate_badges(persons, encoded_front_logo)
             res = template.render(badges=badges)
             with open("static/badges.html", "w") as file:
                 file.write(res)
