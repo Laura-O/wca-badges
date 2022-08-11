@@ -7,6 +7,7 @@
     * {
       box-sizing: border-box;
       -moz-box-sizing: border-box;
+      margin: 0;
     }
 
     body {
@@ -15,6 +16,7 @@
       line-height: 1.3;
       background: #fff !important;
       color: #000;
+      margin: 0;
     }
 
     p {
@@ -27,22 +29,29 @@
       -webkit-box-pack: center;
       justify-content: center;
 
-      height: 150mm;
+      height: 722px;
       page-break-inside: avoid;
       border: medium dashed green;
     }
 
     .nametag {
       align-self: center;
-      display: inline-block;
+      display: -webkit-box;
+      display: flex;
+      -webkit-box-pack: center;
+      justify-content: center;
+      flex-direction: column;
       width: 50%;
       text-align: center;
+      font-size: 14pt;
+      line-height: 1.5;
     }
 
     .schedule {
       align-self: center;
       display: inline-block;
       width: 50%;
+      line-height: 1.2;
     }
 
     .schedule td {
@@ -50,8 +59,10 @@
     }
 
     .name {
-      font-size: 17pt;
+      align-self: center;
+      font-size: 18pt;
       font-weight: 800;
+      max-width: 70%;
     }
 
     .legend {
