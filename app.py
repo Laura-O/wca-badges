@@ -129,10 +129,11 @@ def generate_registration_list(persons):
     registration_list_data = {}
 
     for p in persons:
+        print(p)
         if p["registration"]["status"] == "accepted":
             registration_list_data[p["registrantId"]] = {
                 "name": p["name"],
-                "wcaId": p["wcaId"],
+                "wcaId": p["wcaId"] if p["wcaId"] != "None" else "Newcomer",
                 "birthdate": p["birthdate"] if p["birthdate"] else "",
             }
 
@@ -215,7 +216,7 @@ if submit:
 
     if checkbox_registration_list:
         registration_list = generate_registration_list(persons)
-        with open("static/registration_list.html", "w") as file:
+        with open("/tmp/registration_list.html", "w") as file:
             file.write(registration_list)
 
         st.success("🎉 Your registration list was generated!")

@@ -7,7 +7,11 @@
         <div>
             <p>Competitor-ID:</p>{{ competitor_id }}
         </div>
+        {% if wca_id is not none %}
         <div>{{ wca_id }}</div>
+        {% else %}
+        <div>Newcomer</div>
+        {% endif %}
         <div>{{ country }}</div>
     </div>
     <div class="schedule">
