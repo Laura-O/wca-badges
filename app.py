@@ -145,7 +145,7 @@ if wcif is not None:
                         "filetype": wcif.type, "filesize": wcif.size}
     right_upload.write(file_details)
 
-    with open(os.path.join("tmp/wcif.json"), "wb") as f:
+    with open(os.path.join("/tmp/wcif.json"), "wb") as f:
             f.write((wcif).getbuffer())
 
 with st.form("template_form"):
@@ -154,7 +154,7 @@ with st.form("template_form"):
     submit = st.form_submit_button("Generate badges!")
 
 if submit:
-    with open('tmp/wcif.json') as f:
+    with open('/tmp/wcif.json') as f:
         data = json.load(f)
 
     persons = sorted(data['persons'], key=itemgetter('name'))
