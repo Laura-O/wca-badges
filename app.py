@@ -1,3 +1,4 @@
+from fnmatch import translate
 import country_converter as coco
 import dateutil.parser
 import json
@@ -60,8 +61,11 @@ def generate_events_dict(schedule):
 def create_personal_schedule(assignments, events):
     roles = {'competitor': 'C', 'staff-runner': 'R',
              'staff-scrambler': 'S', 'staff-judge': 'J'}
+    
+    translate_roles = {'C': 'Competitor', 'R': 'Runner', 'S': 'Scrambler', 'J': 'Judge'}
 
     person_schedule = {}
+    assigned_roles = []
     for a in assignments:
         activity_id = a['activityId']
         time = events[activity_id]['start']
@@ -69,6 +73,7 @@ def create_personal_schedule(assignments, events):
         weekday = time.strftime("%A")
 
         assignment = roles[a['assignmentCode']]
+        assigned_roles.append(assignment + ' : ' + translate_roles[assignment])
 
         if weekday not in person_schedule:
             person_schedule[weekday] = {}
@@ -78,28 +83,28 @@ def create_personal_schedule(assignments, events):
             'event': events[activity_id]['name'],
             'role': assignment
         }
-
+    
     sorted_schedule = dict(sorted(person_schedule.items()))
 
     for day in sorted_schedule:
         sorted_schedule[day] = dict(sorted(sorted_schedule[day].items()))
 
-    return sorted_schedule
+    return sorted_schedule, set(assigned_roles)
 
 def generate_badges(persons, encoded_logo):
     badges = ""
     
     for p in persons:
         if (p['registration']['status'] == 'accepted'):
-            person_schedule = create_personal_schedule(
-                p['assignments'], events)
-
+            person_schedule, personal_roles = create_personal_schedule(p['assignments'], events)
+            
             person_badge = badge_template.render(
                 name=p['name'],
                 competitor_id=p['registrantId'],
                 wca_id=p['wcaId'],
                 country=coco.convert(names=p['countryIso2'], to='name_short'),
                 schedule=person_schedule,
+                roles=personal_roles,
                 logo=encoded_logo
             )
 
