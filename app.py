@@ -9,6 +9,7 @@ import streamlit as st
 import streamlit.components.v1 as components
 import base64
 from operator import itemgetter
+import pytz
 
 env = Environment(loader=FileSystemLoader("."), autoescape=select_autoescape())
 template = env.get_template("./templates/template.html")
@@ -44,10 +45,11 @@ def load_image(image_file):
 def generate_events_dict(schedule):
     events = {}
     for venue in schedule['venues']:
+        timezone = pytz.timezone(venue['timezone'])
         for room in venue['rooms']:
             for activity in room['activities']:
                 events[activity['id']] = {
-                    'name': activity['name'], 'start': dateutil.parser.isoparse(activity['startTime'])}
+                    'name': activity['name'], 'start': dateutil.parser.isoparse(activity['startTime']).astimezone(timezone)}
 
                 for child in activity['childActivities']:
                     events[child['id']] = {
@@ -185,9 +187,6 @@ if submit:
             file_name="badges.pdf",
             mime="application/octet-stream",
         )
-    
-    
-    
     
     if checkbox_registration_list:            
         registration_list = generate_registration_list(persons)
