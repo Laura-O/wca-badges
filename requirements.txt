@@ -1,4 +1,6 @@
+click==8.0.2
 country-converter
 pdfkit
-streamlit
 Pillow
+pre-commit==2.20.0
+streamlit

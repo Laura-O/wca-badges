@@ -33,7 +33,7 @@
       display: -webkit-box;
       display: flex;
       -webkit-box-pack: center;
-      justify-content: center;      
+      justify-content: center;
       text-align: left;
     }
 
@@ -66,17 +66,17 @@
       </thead>
       <tbody>
         {% for person in persons %}
-          {% if person.registration.status == 'accepted' %}          
+          {% if person.registration.status == 'accepted' %}
             <tr class="row">
               <td class="col empty"></td>
               <td class="col">{{ person.name }}</td>
-              <td class="col">{{ person.birthdate }}</td> 
+              <td class="col">{{ person.birthdate }}</td>
               <td class="col">{% if person.wcaId == None %} Newcomer {% else %} {% endif %}</td>
               <td class="col empty"></td>
               <td class="col empty"></td>
               <td class="col empty"></td>
               <td class="col empty"></td>
-            </tr> 
+            </tr>
           {% endif %}
         {% endfor %}
       </tbody>

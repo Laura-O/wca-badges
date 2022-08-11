@@ -48,7 +48,11 @@
 
     .schedule {
       align-self: center;
-      display: inline-block;
+      display: -webkit-box;
+      display: flex;
+      -webkit-box-pack: center;
+      justify-content: center;
+      flex-direction: column;
       width: 50%;
       line-height: 1.2;
     }
@@ -78,6 +82,11 @@
     th {
       text-align: left;
       padding: 0;
+    }
+
+    .back-image {
+      align-self: center;
+      margin: 5px auto;
     }
   </style>
 </head>
