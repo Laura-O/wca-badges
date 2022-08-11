@@ -20,10 +20,10 @@ logo_path = "static/images/wca.png"
 options = {
     'dpi': 365,
     'page-size': 'A4',
-    'margin-top': '0.25in',
-    'margin-right': '0.25in',
-    'margin-bottom': '0.25in',
-    'margin-left': '0.25in',
+    'margin-top': '0in',
+    'margin-right': '0in',
+    'margin-bottom': '0in',
+    'margin-left': '0in',
     'encoding': "UTF-8",
     'custom-header': [
         ('Accept-Encoding', 'gzip')
@@ -88,8 +88,9 @@ def create_personal_schedule(assignments, events):
 
 def generate_badges(persons, encoded_logo):
     badges = ""
+    
     for p in persons:
-        if (p['registration']['status'] == 'accepted') and p['registrantId'] < 20:
+        if (p['registration']['status'] == 'accepted'):
             person_schedule = create_personal_schedule(
                 p['assignments'], events)
 
@@ -104,13 +105,13 @@ def generate_badges(persons, encoded_logo):
 
             badges += person_badge
             
-            return badges
+    return badges
 
 def generate_registration_list(persons):
     registration_list_data = {}
     
     for p in persons:
-        if (p['registration']['status'] == 'accepted') and p['registrantId'] < 20:
+        if (p['registration']['status'] == 'accepted'):
             registration_list_data[p['registrantId']] = {
                 'name': p['name'],
                 'wcaId': p['wcaId'],
