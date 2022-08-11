@@ -163,7 +163,7 @@ if front_logo is not None:
         f.write((front_logo).getbuffer())
 
     image = Image.open(front_logo_path)
-    image.thumbnail([150, 150])
+    image.thumbnail([800, 800])
     image.save(front_logo_path)
 
     encoded_front_logo = base64.b64encode(open(front_logo_path, "rb").read()).decode(
