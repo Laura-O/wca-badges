@@ -58,7 +58,9 @@ def generate_events_dict(schedule):
                 for child in activity["childActivities"]:
                     events[child["id"]] = {
                         "name": child["name"],
-                        "start": dateutil.parser.isoparse(child["startTime"]),
+                        "start": dateutil.parser.isoparse(
+                            child["startTime"]
+                        ).astimezone(timezone),
                     }
     return dict(sorted(events.items()))
 
