@@ -33,8 +33,25 @@ options = {
 }
 
 
-st.set_page_config(layout="wide", page_icon="🔖", page_title="Badge Generator")
-st.title("WCA Competition Badge Generator")
+st.set_page_config(layout="centered", page_icon="🔖", page_title="Badge Generator")
+
+st.write(
+    """
+        # WCA Competition Badge Generator
+
+        This tool can be used to create competitor badges in A6 with two of them printed on A4.
+
+        You just need to cut and fold them to have a nice badge with competitor data on the front and the personal schedule on the back.
+        To generate all the data, you need to upload your competition WCIF file after grouping and task assignment is done.
+
+        The file can be found here (change *YourCompetitionID* to you ID):
+
+        https://www.worldcubeassociation.org/api/v0/competitions/YourCompetitionID/wcif/
+        """
+)
+
+
+st.header(f"Upload data")
 
 
 def load_image(image_file):
@@ -146,7 +163,7 @@ def generate_registration_list(persons):
 
 left_upload, right_upload = st.columns(2)
 front_logo = left_upload.file_uploader(
-    "Upload front front_logo", type=["png", "jpg", "jpeg", "svg"]
+    "Upload front logo", type=["png", "jpg", "jpeg", "svg"]
 )
 wcif = right_upload.file_uploader("Upload JSON", type=["json"])
 
@@ -172,6 +189,12 @@ if front_logo is not None:
     encoded_front_logo = base64.b64encode(open(front_logo_path, "rb").read()).decode(
         "utf-8"
     )
+else:
+    left_upload.info(
+        f"""
+            👆 Upload your logo to personalize the badges. If no file is uploaded, the WCA logo will be used.
+            """
+    )
 
 if wcif is not None:
     file_details = {"filename": wcif.name, "filetype": wcif.type, "filesize": wcif.size}
@@ -179,6 +202,13 @@ if wcif is not None:
 
     with open(os.path.join("/tmp/wcif.json"), "wb") as f:
         f.write((wcif).getbuffer())
+else:
+    right_upload.info(
+        f"""
+            👆 Upload your WCIF file.
+            """
+    )
+
 
 with st.form("template_form"):
     checkbox_badges = st.checkbox("Badges", value=True)
