@@ -1,15 +1,18 @@
+import base64
+import json
+import os
+from operator import itemgetter
+
 import country_converter as coco
 import dateutil.parser
-import json
 import pdfkit
-from PIL import Image
-import os
-from jinja2 import Environment, select_autoescape, FileSystemLoader
+import pytz
 import streamlit as st
 import streamlit.components.v1 as components
-import base64
-from operator import itemgetter
-import pytz
+from jinja2 import Environment
+from jinja2 import FileSystemLoader
+from jinja2 import select_autoescape
+from PIL import Image
 
 env = Environment(loader=FileSystemLoader("."), autoescape=select_autoescape())
 template = env.get_template("./templates/template.html")

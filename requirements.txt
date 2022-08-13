@@ -3,4 +3,4 @@ country-converter
 pdfkit
 Pillow
 pre-commit==2.20.0
-streamlit
+streamlit=1.11.1
