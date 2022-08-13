@@ -259,7 +259,7 @@ if submit:
             registration_list, False, options=options
         )
 
-        with open("static/registration_list.html", "r") as file:
+        with open("/tmp/registration_list.html", "r") as file:
             btn = st.download_button(
                 "⬇️ Download registration list as HTML",
                 data=file,
