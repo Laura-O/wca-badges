@@ -151,7 +151,6 @@ def generate_registration_list(persons):
     registration_list_data = {}
 
     for p in persons:
-        print(p)
         if p["registration"]["status"] == "accepted":
             registration_list_data[p["registrantId"]] = {
                 "name": p["name"],
