@@ -18,6 +18,7 @@ env = Environment(loader=FileSystemLoader("."), autoescape=select_autoescape())
 template = env.get_template("./templates/template.html")
 badge_template = env.get_template("./templates/badge.html")
 registration_list_template = env.get_template("./templates/registration_list.html")
+guest_list_template = env.get_template("./templates/guest_list.html")
 
 front_logo_path = "static/images/wca.png"
 encoded_front_logo = ""
@@ -159,8 +160,9 @@ def generate_registration_list(persons):
             }
 
     registration_list = registration_list_template.render(persons=persons)
+    guest_list = guest_list_template.render(persons=persons)
 
-    return registration_list
+    return registration_list, guest_list
 
 
 left_upload, right_upload = st.columns(2)
@@ -214,8 +216,8 @@ else:
 
 with st.form("template_form"):
     checkbox_badges = st.checkbox("Badges", value=True)
-    checkbox_registration_list = st.checkbox("Registration list")
-    submit = st.form_submit_button("Generate badges!")
+    checkbox_registration_list = st.checkbox("Registration lists")
+    submit = st.form_submit_button("Generate!")
 
 if submit:
     with open("/tmp/wcif.json") as f:
@@ -249,14 +251,19 @@ if submit:
         )
 
     if checkbox_registration_list:
-        registration_list = generate_registration_list(persons)
+        registration_list, guest_list = generate_registration_list(persons)
         with open("/tmp/registration_list.html", "w") as file:
             file.write(registration_list)
+
+        with open("/tmp/guest_list.html", "w") as file:
+            file.write(guest_list)
 
         st.success("🎉 Your registration list was generated!")
         pdf_registration_list = pdfkit.from_string(
             registration_list, False, options=options
         )
+
+        pdf_guest_list = pdfkit.from_string(guest_list, False, options=options)
 
         with open("/tmp/registration_list.html", "r") as file:
             btn = st.download_button(
@@ -265,9 +272,23 @@ if submit:
                 file_name="registration_list.html",
             )
 
+        with open("/tmp/guest_list.html", "r") as file:
+            btn = st.download_button(
+                "⬇️ Download guest list as HTML",
+                data=file,
+                file_name="guest_list.html",
+            )
+
         st.download_button(
             "⬇️ Download registration list as PDF",
             data=pdf_registration_list,
             file_name="registration_list.pdf",
+            mime="application/octet-stream",
+        )
+
+        st.download_button(
+            "⬇️ Download guest list as PDF",
+            data=pdf_registration_list,
+            file_name="guest_list.pdf",
             mime="application/octet-stream",
         )

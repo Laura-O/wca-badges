@@ -22,11 +22,11 @@
     th {
       font-weight: bold;
       border: 1px dotted black;
-      text-align: center;
+      text-align: left;
     }
 
     tr {
-      text-align: center;
+      text-align: left;
     }
 
     td {
@@ -68,12 +68,10 @@
     <table>
       <thead>
         <tr>
-          <td class="col large name">Name</td>
-          <td class="col middle">Birthdate</td>
-          <td class="col middle">Newcomer</td>
+          <td class="col large name">Competitor</td>
+          <td class="col large">Guest</td>
           <td class="col small">In?</td>
           <td class="col small">3G?</td>
-          <td class="col middle">Comment</td>
         </tr>
       </thead>
       <tbody>
@@ -81,8 +79,6 @@
           {% if person.registration.status == 'accepted' %}
             <tr class="row person">
               <td class="col name">{{ person.name }}</td>
-              <td class="col">{{ person.birthdate }}</td>
-              <td class="col">{% if person.wcaId == None %} <b>Check ID!</b> {% else %} {% endif %}</td>
               <td class="col"></td>
               <td class="col"></td>
               <td class="col"></td>
