@@ -252,13 +252,15 @@ if submit:
 
     if checkbox_registration_list:
         registration_list, guest_list = generate_registration_list(persons)
-        with open("/tmp/registration_list.html", "w") as file:
+
+        with open("/tmp/registration_list.html", "w") as registration_file:
             file.write(registration_list)
 
-        with open("/tmp/guest_list.html", "w") as file:
+        with open("/tmp/guest_list.html", "w") as guest_file:
             file.write(guest_list)
 
         st.success("🎉 Your registration list was generated!")
+
         pdf_registration_list = pdfkit.from_string(
             registration_list, False, options=options
         )
@@ -268,14 +270,14 @@ if submit:
         with open("/tmp/registration_list.html", "r") as file:
             btn = st.download_button(
                 "⬇️ Download registration list as HTML",
-                data=file,
+                data=registration_file,
                 file_name="registration_list.html",
             )
 
         with open("/tmp/guest_list.html", "r") as file:
             btn = st.download_button(
                 "⬇️ Download guest list as HTML",
-                data=file,
+                data=guest_file,
                 file_name="guest_list.html",
             )
 
