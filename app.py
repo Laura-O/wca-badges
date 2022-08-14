@@ -254,10 +254,10 @@ if submit:
         registration_list, guest_list = generate_registration_list(persons)
 
         with open("/tmp/registration_list.html", "w") as registration_file:
-            file.write(registration_list)
+            registration_file.write(registration_list)
 
         with open("/tmp/guest_list.html", "w") as guest_file:
-            file.write(guest_list)
+            guest_file.write(guest_list)
 
         st.success("🎉 Your registration list was generated!")
 
