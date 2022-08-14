@@ -267,14 +267,14 @@ if submit:
 
         pdf_guest_list = pdfkit.from_string(guest_list, False, options=options)
 
-        with open("/tmp/registration_list.html", "r") as file:
+        with open("/tmp/registration_list.html", "r") as registration_file:
             btn = st.download_button(
                 "⬇️ Download registration list as HTML",
                 data=registration_file,
                 file_name="registration_list.html",
             )
 
-        with open("/tmp/guest_list.html", "r") as file:
+        with open("/tmp/guest_list.html", "r") as guest_file:
             btn = st.download_button(
                 "⬇️ Download guest list as HTML",
                 data=guest_file,
